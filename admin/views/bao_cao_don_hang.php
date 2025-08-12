@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo cáo đơn hàng - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="admin/views/css/admin-style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .stats-card {
@@ -41,13 +42,13 @@
     <div class="container-fluid py-4">
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-chart-bar text-primary"></i> Báo cáo đơn hàng</h2>
+            <h2><i class="bi bi-graph-up text-primary"></i> Báo cáo đơn hàng</h2>
             <div>
                 <a href="?act=ql_donhang" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay lại
+                    <i class="bi bi-arrow-left"></i> Quay lại
                 </a>
                 <button onclick="window.print()" class="btn btn-info">
-                    <i class="fas fa-print"></i> In báo cáo
+                    <i class="bi bi-printer"></i> In báo cáo
                 </button>
             </div>
         </div>
@@ -76,10 +77,10 @@
                     <label class="form-label">&nbsp;</label>
                     <div>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i> Tạo báo cáo
+                            <i class="bi bi-search"></i> Tạo báo cáo
                         </button>
                         <a href="?act=bao_cao_don_hang" class="btn btn-outline-secondary">
-                            <i class="fas fa-times"></i> Xóa lọc
+                            <i class="bi bi-x-circle"></i> Xóa lọc
                         </a>
                     </div>
                 </div>
@@ -91,7 +92,7 @@
             <div class="col-md-3">
                 <div class="card stats-card bg-primary text-white">
                     <div class="card-body text-center">
-                        <i class="fas fa-shopping-bag fa-3x mb-3"></i>
+                        <i class="bi bi-bag fa-3x mb-3"></i>
                         <h4><?= number_format($thongKe['tong_don_hang'] ?? 0) ?></h4>
                         <p class="mb-0">Tổng đơn hàng</p>
                     </div>
@@ -100,7 +101,7 @@
             <div class="col-md-3">
                 <div class="card stats-card bg-success text-white">
                     <div class="card-body text-center">
-                        <i class="fas fa-check-circle fa-3x mb-3"></i>
+                        <i class="bi bi-check-circle fa-3x mb-3"></i>
                         <h4><?= number_format($thongKe['da_giao'] ?? 0) ?></h4>
                         <p class="mb-0">Đã giao</p>
                     </div>
@@ -109,7 +110,7 @@
             <div class="col-md-3">
                 <div class="card stats-card bg-warning text-white">
                     <div class="card-body text-center">
-                        <i class="fas fa-clock fa-3x mb-3"></i>
+                        <i class="bi bi-clock fa-3x mb-3"></i>
                         <h4><?= number_format($thongKe['cho_xu_ly'] ?? 0) ?></h4>
                         <p class="mb-0">Chờ xử lý</p>
                     </div>
@@ -118,7 +119,7 @@
             <div class="col-md-3">
                 <div class="card stats-card bg-info text-white">
                     <div class="card-body text-center">
-                        <i class="fas fa-money-bill-wave fa-3x mb-3"></i>
+                        <i class="bi bi-currency-dollar fa-3x mb-3"></i>
                         <h4><?= number_format($thongKe['tong_doanh_thu'] ?? 0) ?>đ</h4>
                         <p class="mb-0">Tổng doanh thu</p>
                     </div>
@@ -131,7 +132,7 @@
             <div class="col-md-6">
                 <div class="chart-container">
                     <h5 class="text-center mb-3">
-                        <i class="fas fa-chart-pie text-primary"></i> 
+                        <i class="bi bi-pie-chart text-primary"></i> 
                         Phân bố trạng thái đơn hàng
                     </h5>
                     <canvas id="statusChart" width="400" height="300"></canvas>
@@ -140,7 +141,7 @@
             <div class="col-md-6">
                 <div class="chart-container">
                     <h5 class="text-center mb-3">
-                        <i class="fas fa-chart-line text-primary"></i> 
+                        <i class="bi bi-graph-up text-primary"></i> 
                         Doanh thu theo thời gian
                     </h5>
                     <canvas id="revenueChart" width="400" height="300"></canvas>
@@ -152,7 +153,7 @@
         <div class="report-table">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">
-                    <i class="fas fa-table"></i> 
+                    <i class="bi bi-table text-primary"></i> 
                     Báo cáo chi tiết
                     <span class="badge bg-light text-primary ms-2"><?= count($baoCao) ?> bản ghi</span>
                 </h5>
@@ -171,7 +172,7 @@
                         <?php if (empty($baoCao)): ?>
                             <tr>
                                 <td colspan="4" class="text-center py-4">
-                                    <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                                    <i class="bi bi-bar-chart fa-3x text-muted mb-3"></i>
                                     <p class="text-muted">Không có dữ liệu báo cáo</p>
                                 </td>
                             </tr>
@@ -207,7 +208,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="mb-0"><i class="fas fa-info-circle text-primary"></i> Thông tin bổ sung</h6>
+                        <h6 class="mb-0"><i class="bi bi-info-circle text-primary"></i> Thông tin bổ sung</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -233,18 +234,18 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="mb-0"><i class="fas fa-lightbulb text-warning"></i> Gợi ý</h6>
+                        <h6 class="mb-0"><i class="bi bi-lightbulb text-warning"></i> Gợi ý</h6>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled mb-0">
                             <?php if (($thongKe['cho_xu_ly'] ?? 0) > 5): ?>
-                                <li><i class="fas fa-exclamation-triangle text-warning"></i> Có nhiều đơn hàng chờ xử lý</li>
+                                <li><i class="bi bi-exclamation-triangle text-warning"></i> Có nhiều đơn hàng chờ xử lý</li>
                             <?php endif; ?>
                             <?php if (($thongKe['da_huy'] ?? 0) > ($thongKe['tong_don_hang'] ?? 0) * 0.1): ?>
-                                <li><i class="fas fa-exclamation-triangle text-danger"></i> Tỷ lệ hủy đơn hàng cao</li>
+                                <li><i class="bi bi-exclamation-triangle text-danger"></i> Tỷ lệ hủy đơn hàng cao</li>
                             <?php endif; ?>
                             <?php if (($thongKe['tong_doanh_thu'] ?? 0) > 0): ?>
-                                <li><i class="fas fa-thumbs-up text-success"></i> Doanh thu ổn định</li>
+                                <li><i class="bi bi-hand-thumbs-up text-success"></i> Doanh thu ổn định</li>
                             <?php endif; ?>
                         </ul>
                     </div>

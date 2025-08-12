@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý đơn hàng - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="admin/views/css/admin-style.css">
     <style>
         .status-badge {
             font-size: 0.8rem;
@@ -33,16 +34,44 @@
     </style>
 </head>
 <body class="bg-light">
-    <div class="container-fluid py-4">
+    <!-- Sidebar menu -->
+    <div class="sidebar">
+        <h4><i class="bi bi-gear-fill"></i> Admin Panel</h4>
+        <a href="?act=home">
+            <i class="bi bi-house-door"></i> Trang chủ
+        </a>
+        <a href="?act=them">
+            <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+        </a>
+        <a href="?act=quan_ly_bien_the">
+            <i class="bi bi-collection"></i> Quản lý biến thể
+        </a>
+        <a href="?act=ql_donhang" class="active">
+            <i class="bi bi-cart-check"></i> Quản lý đơn hàng
+        </a>
+        <a href="?act=ql_nguoidung">
+            <i class="bi bi-people"></i> Quản lý người dùng
+        </a>
+        <a href="?act=timKiemSanPham">
+            <i class="bi bi-search"></i> Tìm kiếm
+        </a>
+        <a href="?act=logout">
+            <i class="bi bi-box-arrow-right"></i> Đăng xuất
+        </a>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="container-fluid py-4">
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-shopping-cart text-primary"></i> Quản lý đơn hàng</h2>
+            <h2><i class="bi bi-cart-check text-primary"></i> Quản lý đơn hàng</h2>
             <div>
                 <a href="?act=bao_cao_don_hang" class="btn btn-info">
-                    <i class="fas fa-chart-bar"></i> Báo cáo
+                    <i class="bi bi-graph-up"></i> Báo cáo
                 </a>
                 <a href="?act=home" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay lại
+                    <i class="bi bi-arrow-left"></i> Quay lại
                 </a>
             </div>
         </div>
@@ -58,7 +87,7 @@
                                 <h3><?= number_format($thongKe['tong_don_hang'] ?? 0) ?></h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="fas fa-shopping-bag fa-2x"></i>
+                                <i class="bi bi-bag fa-2x"></i>
                             </div>
                         </div>
                     </div>
@@ -73,7 +102,7 @@
                                 <h3><?= number_format($thongKe['cho_xu_ly'] ?? 0) ?></h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="fas fa-clock fa-2x"></i>
+                                <i class="bi bi-clock fa-2x"></i>
                             </div>
                         </div>
                     </div>
@@ -88,7 +117,7 @@
                                 <h3><?= number_format($thongKe['da_giao'] ?? 0) ?></h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="fas fa-check-circle fa-2x"></i>
+                                <i class="bi bi-check-circle fa-2x"></i>
                             </div>
                         </div>
                     </div>
@@ -103,7 +132,7 @@
                                 <h3><?= number_format($thongKe['tong_doanh_thu'] ?? 0) ?>đ</h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="fas fa-money-bill-wave fa-2x"></i>
+                                <i class="bi bi-currency-dollar fa-2x"></i>
                             </div>
                         </div>
                     </div>
@@ -138,10 +167,10 @@
                     <label class="form-label">&nbsp;</label>
                     <div>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i> Lọc
+                            <i class="bi bi-search"></i> Lọc
                         </button>
                         <a href="?act=ql_donhang" class="btn btn-outline-secondary">
-                            <i class="fas fa-times"></i> Xóa lọc
+                            <i class="bi bi-x-circle"></i> Xóa lọc
                         </a>
                     </div>
                 </div>
@@ -152,7 +181,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
-                    <i class="fas fa-list"></i> Danh sách đơn hàng
+                    <i class="bi bi-list-ul"></i> Danh sách đơn hàng
                     <span class="badge bg-primary ms-2"><?= count($danhSachDonHang) ?> đơn hàng</span>
                 </h5>
             </div>
@@ -172,10 +201,10 @@
                         <tbody>
                             <?php if (empty($danhSachDonHang)): ?>
                                 <tr>
-                                    <td colspan="6" class="text-center py-4">
-                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                        <p class="text-muted">Không có đơn hàng nào</p>
-                                    </td>
+                                                                            <td colspan="6" class="text-center py-4">
+                                            <i class="bi bi-inbox display-1 text-muted mb-3"></i>
+                                            <p class="text-muted">Không có đơn hàng nào</p>
+                                        </td>
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($danhSachDonHang as $donHang): ?>
@@ -203,19 +232,19 @@
                                             switch ($donHang['trang_thai']) {
                                                 case 'chờ xử lý':
                                                     $trangThaiClass = 'bg-warning';
-                                                    $trangThaiIcon = 'fas fa-clock';
+                                                    $trangThaiIcon = 'bi bi-clock';
                                                     break;
                                                 case 'đang giao':
                                                     $trangThaiClass = 'bg-info';
-                                                    $trangThaiIcon = 'fas fa-truck';
+                                                    $trangThaiIcon = 'bi bi-truck';
                                                     break;
                                                 case 'đã giao':
                                                     $trangThaiClass = 'bg-success';
-                                                    $trangThaiIcon = 'fas fa-check-circle';
+                                                    $trangThaiIcon = 'bi bi-check-circle';
                                                     break;
                                                 case 'đã huỷ':
                                                     $trangThaiClass = 'bg-danger';
-                                                    $trangThaiIcon = 'fas fa-times-circle';
+                                                    $trangThaiIcon = 'bi bi-x-circle';
                                                     break;
                                             }
                                             ?>
@@ -229,14 +258,14 @@
                                                 <a href="?act=chi_tiet_don_hang&id=<?= $donHang['id'] ?>" 
                                                    class="btn btn-sm btn-outline-primary btn-action" 
                                                    title="Xem chi tiết">
-                                                    <i class="fas fa-eye"></i>
+                                                    <i class="bi bi-eye"></i>
                                                 </a>
                                                 <?php if ($donHang['trang_thai'] === 'chờ xử lý'): ?>
                                                     <button type="button" 
                                                             class="btn btn-sm btn-outline-success btn-action" 
                                                             title="Cập nhật trạng thái"
                                                             onclick="openUpdateStatusModal(<?= $donHang['id'] ?>)">
-                                                        <i class="fas fa-edit"></i>
+                                                        <i class="bi bi-pencil"></i>
                                                     </button>
                                                 <?php endif; ?>
                                                 <?php if (in_array($donHang['trang_thai'], ['chờ xử lý', 'đang giao'])): ?>
@@ -244,7 +273,7 @@
                                                             class="btn btn-sm btn-outline-danger btn-action" 
                                                             title="Hủy đơn hàng"
                                                             onclick="openCancelOrderModal(<?= $donHang['id'] ?>)">
-                                                        <i class="fas fa-times"></i>
+                                                        <i class="bi bi-x-circle"></i>
                                                     </button>
                                                 <?php endif; ?>
                                             </div>
@@ -257,6 +286,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Modal cập nhật trạng thái -->
@@ -305,7 +335,7 @@
                     <div class="modal-body">
                         <input type="hidden" name="id_don_hang" id="cancelOrderId">
                         <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
+                                                            <i class="bi bi-exclamation-triangle"></i>
                             <strong>Lưu ý:</strong> Khi hủy đơn hàng, số lượng sản phẩm sẽ được hoàn trả về kho.
                         </div>
                         <div class="mb-3">

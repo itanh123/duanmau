@@ -1,4 +1,4 @@
-/* ===== STYLE CHUNG CHO TẤT CẢ TRANG KHÁCH HÀNG ===== */
+/* ===== STYLE CHUNG CHO TẤT CẢ TRANG ADMIN ===== */
 
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -125,6 +125,20 @@ p {
     border: none;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-stats {
+    transition: transform 0.2s;
+}
+
+.card-stats:hover {
+    transform: translateY(-2px);
 }
 
 /* Alerts */
@@ -145,6 +159,11 @@ p {
     padding: 0.5rem 1rem;
 }
 
+.status-badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+}
+
 /* Tables */
 .table {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -162,43 +181,99 @@ p {
     vertical-align: middle;
 }
 
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
 /* Navigation */
 .navbar {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
     font-weight: 700;
     font-size: 1.25rem;
-    color: #333 !important;
 }
 
 .nav-link {
     font-weight: 500;
     font-size: 0.95rem;
-    color: #333 !important;
 }
 
-.nav-link:hover {
-    color: #007bff !important;
-}
-
-.btn-register {
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    padding: 12px 30px;
-    font-size: 1.1rem;
-    border-radius: 25px;
-    transition: all 0.3s ease;
+    padding: 20px;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
 }
 
-.btn-register:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+.sidebar h4 {
+    color: white;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.sidebar a {
+    color: white;
+    display: block;
+    padding: 12px 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+}
+
+/* Main content */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Header sections */
+.header-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+/* Filter sections */
+.filter-section {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Action buttons */
+.btn-action {
+    margin: 0 2px;
+    border-radius: 6px;
 }
 
 /* Modal */
@@ -241,6 +316,17 @@ footer {
     .btn {
         font-size: 0.9rem;
     }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -254,6 +340,10 @@ footer {
 
     body {
         font-size: 14px;
+    }
+
+    .main-content {
+        padding: 15px;
     }
 }
 
@@ -300,85 +390,47 @@ footer {
     background: #a8a8a8;
 }
 
-/* ===== STYLES CHO TRANG DANH SÁCH ĐƠN HÀNG ===== */
-.orders-container {
-    max-width: 1200px;
-    margin: 100px auto 30px auto;
-}
-
-.orders-card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.orders-header {
-    background: #007bff;
+/* Admin specific styles */
+.admin-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 20px;
-    text-align: center;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.orders-list {
-    padding: 20px;
+.admin-header h2 {
+    color: white;
+    margin-bottom: 0;
 }
 
-.order-item {
-    border: 1px solid #eee;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    transition: box-shadow 0.2s;
+.stats-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-.order-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.order-header {
-    background: #f8f9fa;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+.stats-icon {
+    font-size: 2.5rem;
+    opacity: 0.8;
 }
 
-.order-body {
-    padding: 15px;
+.stats-number {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 10px 0;
 }
 
-.status-badge {
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.status-chờxửlý {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.status-đanggiao {
-    background: #d1ecf1;
-    color: #0c5460;
-}
-
-.status-đãgiao {
-    background: #d4edda;
-    color: #155724;
-}
-
-.status-đãhuỷ {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.empty-orders {
-    text-align: center;
-    padding: 50px;
-    color: #666;
-}
-
-.alert {
-    margin-bottom: 20px;
+.stats-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
 }

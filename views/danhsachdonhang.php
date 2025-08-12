@@ -7,77 +7,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="views/css/customer-style.css">
-    <style>
-        .orders-container {
-            max-width: 1200px;
-            margin: 30px auto;
-        }
-        .orders-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .orders-header {
-            background: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .orders-list {
-            padding: 20px;
-        }
-        .order-item {
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            transition: box-shadow 0.2s;
-        }
-        .order-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .order-header {
-            background: #f8f9fa;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .order-body {
-            padding: 15px;
-        }
-        .status-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .status-chờxửlý {
-            background: #fff3cd;
-            color: #856404;
-        }
-        .status-đanggiao {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-        .status-đãgiao {
-            background: #d4edda;
-            color: #155724;
-        }
-        .status-đãhuỷ {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        .empty-orders {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-        }
-        .alert {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="?act=/">
+                <i class="bi bi-shop"></i> Shop Quần Áo
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="?act=hienthi">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?act=timKiemSanPham">Tìm kiếm</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="#lien-he">Liên hệ</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="?act=login">
+                            <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-register text-white" href="?act=dangky">
+                            <i class="bi bi-person-plus"></i> Đăng ký
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="orders-container">
         <div class="orders-card">
             <div class="orders-header">

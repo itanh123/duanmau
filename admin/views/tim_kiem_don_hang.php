@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm kiếm đơn hàng - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="admin/views/css/admin-style.css">
     <style>
         .search-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -43,10 +44,10 @@
     <div class="container-fluid py-4">
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-search text-primary"></i> Tìm kiếm đơn hàng</h2>
+            <h2><i class="bi bi-search text-primary"></i> Tìm kiếm đơn hàng</h2>
             <div>
                 <a href="?act=ql_donhang" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay lại
+                    <i class="bi bi-arrow-left"></i> Quay lại
                 </a>
             </div>
         </div>
@@ -56,14 +57,14 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h4 class="mb-3">
-                        <i class="fas fa-search"></i> 
+                        <i class="bi bi-search"></i> 
                         Kết quả tìm kiếm cho: "<strong><?= htmlspecialchars($tuKhoa) ?></strong>"
                     </h4>
                     <p class="mb-0">Tìm thấy <strong><?= count($ketQuaTimKiem) ?></strong> đơn hàng phù hợp</p>
                 </div>
                 <div class="col-md-4 text-end">
                     <a href="?act=ql_donhang" class="btn btn-light">
-                        <i class="fas fa-list"></i> Xem tất cả đơn hàng
+                        <i class="bi bi-list-ul"></i> Xem tất cả đơn hàng
                     </a>
                 </div>
             </div>
@@ -72,7 +73,7 @@
         <!-- Bộ lọc bổ sung -->
         <div class="card mb-4">
             <div class="card-header">
-                <h6 class="mb-0"><i class="fas fa-filter text-primary"></i> Bộ lọc bổ sung</h6>
+                <h6 class="mb-0"><i class="bi bi-funnel text-primary"></i> Bộ lọc bổ sung</h6>
             </div>
             <div class="card-body">
                 <form method="GET" action="" class="row g-3">
@@ -100,12 +101,12 @@
                     <div class="col-md-3">
                         <label class="form-label">&nbsp;</label>
                         <div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-filter"></i> Lọc
-                            </button>
-                            <a href="?act=tim_kiem_don_hang&tu_khoa=<?= urlencode($tuKhoa) ?>" class="btn btn-outline-secondary">
-                                <i class="fas fa-times"></i> Xóa lọc
-                            </a>
+                                                    <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-funnel"></i> Lọc
+                        </button>
+                        <a href="?act=tim_kiem_don_hang&tu_khoa=<?= urlencode($tuKhoa) ?>" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> Xóa lọc
+                        </a>
                         </div>
                     </div>
                 </form>
@@ -115,11 +116,11 @@
         <!-- Kết quả tìm kiếm -->
         <?php if (empty($ketQuaTimKiem)): ?>
             <div class="text-center py-5">
-                <i class="fas fa-search fa-4x text-muted mb-3"></i>
+                <i class="bi bi-search display-1 text-muted mb-3"></i>
                 <h4 class="text-muted">Không tìm thấy đơn hàng nào</h4>
                 <p class="text-muted">Thử thay đổi từ khóa tìm kiếm hoặc bộ lọc</p>
                 <a href="?act=ql_donhang" class="btn btn-primary">
-                    <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                    <i class="bi bi-arrow-left"></i> Quay lại danh sách
                 </a>
             </div>
         <?php else: ?>
@@ -129,7 +130,7 @@
                         <div class="card result-card h-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h6 class="mb-0">
-                                    <i class="fas fa-shopping-cart text-primary"></i> 
+                                    <i class="bi bi-cart text-primary"></i> 
                                     Đơn #<?= $donHang['id'] ?>
                                 </h6>
                                 <?php
@@ -138,19 +139,19 @@
                                 switch ($donHang['trang_thai']) {
                                     case 'chờ xử lý':
                                         $trangThaiClass = 'bg-warning';
-                                        $trangThaiIcon = 'fas fa-clock';
+                                        $trangThaiIcon = 'bi bi-clock';
                                         break;
                                     case 'đang giao':
                                         $trangThaiClass = 'bg-info';
-                                        $trangThaiIcon = 'fas fa-truck';
+                                        $trangThaiIcon = 'bi bi-truck';
                                         break;
                                     case 'đã giao':
                                         $trangThaiClass = 'bg-success';
-                                        $trangThaiIcon = 'fas fa-check-circle';
+                                        $trangThaiIcon = 'bi bi-check-circle';
                                         break;
                                     case 'đã huỷ':
                                         $trangThaiClass = 'bg-danger';
-                                        $trangThaiIcon = 'fas fa-times-circle';
+                                        $trangThaiIcon = 'bi bi-x-circle';
                                         break;
                                 }
                                 ?>
@@ -162,7 +163,7 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <h6 class="card-title">
-                                        <i class="fas fa-user text-info"></i> 
+                                        <i class="bi bi-person text-info"></i> 
                                         <?php 
                                         $ten = htmlspecialchars($donHang['ten_nguoi_dung']);
                                         echo str_replace($tuKhoa, '<span class="highlight">' . $tuKhoa . '</span>', $ten);
@@ -170,7 +171,7 @@
                                     </h6>
                                     <p class="mb-1">
                                         <small class="text-muted">
-                                            <i class="fas fa-envelope"></i> 
+                                            <i class="bi bi-envelope"></i> 
                                             <?php 
                                             $email = htmlspecialchars($donHang['email']);
                                             echo str_replace($tuKhoa, '<span class="highlight">' . $tuKhoa . '</span>', $email);
@@ -179,7 +180,7 @@
                                     </p>
                                     <p class="mb-1">
                                         <small class="text-muted">
-                                            <i class="fas fa-phone"></i> 
+                                            <i class="bi bi-telephone"></i> 
                                             <?= htmlspecialchars($donHang['so_dien_thoai']) ?>
                                         </small>
                                     </p>
@@ -204,13 +205,13 @@
                                 <div class="d-grid gap-2">
                                     <a href="?act=chi_tiet_don_hang&id=<?= $donHang['id'] ?>" 
                                        class="btn btn-outline-primary btn-sm">
-                                        <i class="fas fa-eye"></i> Xem chi tiết
+                                        <i class="bi bi-eye"></i> Xem chi tiết
                                     </a>
                                     <?php if ($donHang['trang_thai'] === 'chờ xử lý'): ?>
                                         <button type="button" 
                                                 class="btn btn-outline-success btn-sm"
                                                 onclick="openUpdateStatusModal(<?= $donHang['id'] ?>)">
-                                            <i class="fas fa-edit"></i> Cập nhật trạng thái
+                                            <i class="bi bi-pencil"></i> Cập nhật trạng thái
                                         </button>
                                     <?php endif; ?>
                                 </div>

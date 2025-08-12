@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết đơn hàng #<?= $donHang['id'] ?> - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="admin/views/css/admin-style.css">
     <style>
         .order-info {
             background: #f8f9fa;
@@ -45,15 +46,15 @@
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>
-                <i class="fas fa-file-invoice text-primary"></i> 
+                <i class="bi bi-receipt text-primary"></i> 
                 Chi tiết đơn hàng #<?= $donHang['id'] ?>
             </h2>
             <div>
                 <a href="?act=ql_donhang" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay lại
+                    <i class="bi bi-arrow-left"></i> Quay lại
                 </a>
                 <button onclick="window.print()" class="btn btn-info">
-                    <i class="fas fa-print"></i> In đơn hàng
+                    <i class="bi bi-printer"></i> In đơn hàng
                 </button>
             </div>
         </div>
@@ -62,7 +63,7 @@
             <!-- Thông tin đơn hàng -->
             <div class="col-md-8">
                 <div class="order-info mb-4">
-                    <h5><i class="fas fa-info-circle text-primary"></i> Thông tin đơn hàng</h5>
+                    <h5><i class="bi bi-info-circle text-primary"></i> Thông tin đơn hàng</h5>
                     <div class="row">
                         <div class="col-md-6">
                             <p><strong>Mã đơn hàng:</strong> #<?= $donHang['id'] ?></p>
@@ -74,19 +75,19 @@
                                 switch ($donHang['trang_thai']) {
                                     case 'chờ xử lý':
                                         $trangThaiClass = 'bg-warning';
-                                        $trangThaiIcon = 'fas fa-clock';
+                                        $trangThaiIcon = 'bi bi-clock';
                                         break;
                                     case 'đang giao':
                                         $trangThaiClass = 'bg-info';
-                                        $trangThaiIcon = 'fas fa-truck';
+                                        $trangThaiIcon = 'bi bi-truck';
                                         break;
                                     case 'đã giao':
                                         $trangThaiClass = 'bg-success';
-                                        $trangThaiIcon = 'fas fa-check-circle';
+                                        $trangThaiIcon = 'bi bi-check-circle';
                                         break;
                                     case 'đã huỷ':
                                         $trangThaiClass = 'bg-danger';
-                                        $trangThaiIcon = 'fas fa-times-circle';
+                                        $trangThaiIcon = 'bi bi-x-circle';
                                         break;
                                 }
                                 ?>
@@ -114,7 +115,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <i class="fas fa-boxes text-primary"></i> 
+                            <i class="bi bi-box-seam text-primary"></i> 
                             Sản phẩm trong đơn hàng
                             <span class="badge bg-primary ms-2"><?= count($donHang['chi_tiet']) ?> sản phẩm</span>
                         </h5>
@@ -133,7 +134,7 @@
                                                      class="product-image">
                                             <?php else: ?>
                                                 <div class="product-image bg-secondary d-flex align-items-center justify-content-center">
-                                                    <i class="fas fa-image text-white"></i>
+                                                    <i class="bi bi-image text-white"></i>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
@@ -170,7 +171,7 @@
             <div class="col-md-4">
                 <!-- Thông tin khách hàng -->
                 <div class="customer-info mb-4">
-                    <h5><i class="fas fa-user text-primary"></i> Thông tin khách hàng</h5>
+                    <h5><i class="bi bi-person text-primary"></i> Thông tin khách hàng</h5>
                     <p><strong>Họ tên:</strong> <?= htmlspecialchars($donHang['ten_nguoi_dung']) ?></p>
                     <p><strong>Email:</strong> <?= htmlspecialchars($donHang['email']) ?></p>
                     <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($donHang['so_dien_thoai']) ?></p>
@@ -181,7 +182,7 @@
 
                 <!-- Tóm tắt đơn hàng -->
                 <div class="order-summary mb-4">
-                    <h5><i class="fas fa-calculator text-primary"></i> Tóm tắt đơn hàng</h5>
+                    <h5><i class="bi bi-calculator text-primary"></i> Tóm tắt đơn hàng</h5>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Tổng tiền hàng:</span>
                         <span><?= number_format($donHang['tong_tien']) ?>đ</span>
@@ -200,25 +201,25 @@
                 <!-- Thao tác -->
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="mb-0"><i class="fas fa-tools text-primary"></i> Thao tác</h6>
+                        <h6 class="mb-0"><i class="bi bi-gear text-primary"></i> Thao tác</h6>
                     </div>
                     <div class="card-body">
                         <?php if ($donHang['trang_thai'] === 'chờ xử lý'): ?>
                             <button type="button" class="btn btn-success w-100 mb-2" 
                                     onclick="openUpdateStatusModal(<?= $donHang['id'] ?>)">
-                                <i class="fas fa-edit"></i> Cập nhật trạng thái
+                                <i class="bi bi-pencil"></i> Cập nhật trạng thái
                             </button>
                         <?php endif; ?>
                         
                         <?php if (in_array($donHang['trang_thai'], ['chờ xử lý', 'đang giao'])): ?>
                             <button type="button" class="btn btn-danger w-100 mb-2" 
                                     onclick="openCancelOrderModal(<?= $donHang['id'] ?>)">
-                                <i class="fas fa-times"></i> Hủy đơn hàng
+                                <i class="bi bi-x-circle"></i> Hủy đơn hàng
                             </button>
                         <?php endif; ?>
                         
                         <a href="?act=ql_donhang" class="btn btn-outline-secondary w-100">
-                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                            <i class="bi bi-arrow-left"></i> Quay lại danh sách
                         </a>
                     </div>
                 </div>
@@ -272,7 +273,7 @@
                     <div class="modal-body">
                         <input type="hidden" name="id_don_hang" value="<?= $donHang['id'] ?>">
                         <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            <i class="bi bi-exclamation-triangle"></i>
                             <strong>Lưu ý:</strong> Khi hủy đơn hàng, số lượng sản phẩm sẽ được hoàn trả về kho.
                         </div>
                         <div class="mb-3">

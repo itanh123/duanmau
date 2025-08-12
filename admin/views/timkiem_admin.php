@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tìm kiếm sản phẩm - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="admin/views/css/admin-style.css">
     <style>
         .search-form {
             background: #f8f9fa;
@@ -79,7 +80,7 @@
     <div class="container mt-4">
         <!-- Form tìm kiếm -->
         <div class="search-form">
-            <h3 class="mb-3"><i class="fas fa-search"></i> Tìm kiếm sản phẩm</h3>
+            <h3 class="mb-3"><i class="bi bi-search"></i> Tìm kiếm sản phẩm</h3>
             <form method="GET" action="?act=timKiemSanPham">
                 <div class="row">
                     <div class="col-md-3">
@@ -114,10 +115,10 @@
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary me-2">
-                            <i class="fas fa-search"></i> Tìm kiếm
+                            <i class="bi bi-search"></i> Tìm kiếm
                         </button>
                         <a href="?act=timKiemSanPham" class="btn btn-secondary">
-                            <i class="fas fa-refresh"></i> Làm mới
+                            <i class="bi bi-arrow-clockwise"></i> Làm mới
                         </a>
                     </div>
                 </div>
@@ -130,7 +131,7 @@
                 <h4>Kết quả tìm kiếm</h4>
                 <?php if (empty($sanpham)): ?>
                     <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> Không tìm thấy sản phẩm nào phù hợp với tiêu chí tìm kiếm.
+                        <i class="bi bi-info-circle"></i> Không tìm thấy sản phẩm nào phù hợp với tiêu chí tìm kiếm.
                     </div>
                 <?php else: ?>
                     <p class="text-muted">Tìm thấy <?= count($sanpham) ?> sản phẩm</p>
@@ -170,7 +171,7 @@
                                                  style="width: 80px; height: 80px; object-fit: cover;">
                                         <?php else: ?>
                                             <div class="bg-light text-center p-2" style="width: 80px; height: 80px; line-height: 76px;">
-                                                <i class="fas fa-image text-muted"></i>
+                                                <i class="bi bi-image text-muted"></i>
                                             </div>
                                         <?php endif; ?>
                                     </td>
@@ -205,16 +206,16 @@
                                         <div class="admin-actions">
                                             <a href="?act=sua&id=<?= $sp['id'] ?>" 
                                                class="btn btn-warning btn-sm mb-1">
-                                                <i class="fas fa-edit"></i> Sửa
+                                                <i class="bi bi-pencil"></i> Sửa
                                             </a>
                                             <a href="?act=quanLyBienThe" 
                                                class="btn btn-info btn-sm mb-1">
-                                                <i class="fas fa-cogs"></i> Biến thể
+                                                <i class="bi bi-gear"></i> Biến thể
                                             </a>
                                             <button type="button" 
                                                     class="btn btn-danger btn-sm mb-1"
                                                     onclick="confirmDelete(<?= $sp['id'] ?>)">
-                                                <i class="fas fa-trash"></i> Xóa
+                                                <i class="bi bi-trash"></i> Xóa
                                             </button>
                                         </div>
                                     </td>
@@ -227,7 +228,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function confirmDelete(id) {
             if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
