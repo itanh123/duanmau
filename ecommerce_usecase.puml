@@ -1,0 +1,151 @@
+@startuml E-commerce Website Use Case Diagram
+
+!define RECTANGLE class
+
+skinparam actorStyle awesome
+skinparam usecase {
+    BackgroundColor LightBlue
+    BorderColor DarkBlue
+    ArrowColor DarkBlue
+}
+
+title E-commerce Website Use Case Diagram
+
+' Actors
+actor "Khách hàng" as Customer
+actor "Khách hàng đã đăng ký" as RegisteredCustomer
+actor "Quản trị viên" as Admin
+actor "Nhân viên bán hàng" as SalesStaff
+actor "Hệ thống thanh toán" as PaymentSystem
+actor "Hệ thống vận chuyển" as ShippingSystem
+
+' Use Cases for Customer
+rectangle "Quản lý tài khoản" {
+    usecase "Đăng ký tài khoản" as UC1
+    usecase "Đăng nhập" as UC2
+    usecase "Quên mật khẩu" as UC3
+    usecase "Cập nhật thông tin cá nhân" as UC4
+    usecase "Xem lịch sử đơn hàng" as UC5
+}
+
+rectangle "Mua sắm" {
+    usecase "Tìm kiếm sản phẩm" as UC6
+    usecase "Xem danh sách sản phẩm" as UC7
+    usecase "Xem chi tiết sản phẩm" as UC8
+    usecase "Thêm vào giỏ hàng" as UC9
+    usecase "Xem giỏ hàng" as UC10
+    usecase "Cập nhật giỏ hàng" as UC11
+    usecase "Đặt hàng" as UC12
+    usecase "Chọn phương thức thanh toán" as UC13
+    usecase "Chọn phương thức vận chuyển" as UC14
+}
+
+rectangle "Đánh giá và bình luận" {
+    usecase "Đánh giá sản phẩm" as UC15
+    usecase "Viết bình luận" as UC16
+    usecase "Xem đánh giá của khác" as UC17
+}
+
+rectangle "Hỗ trợ khách hàng" {
+    usecase "Liên hệ hỗ trợ" as UC18
+    usecase "Tạo yêu cầu hỗ trợ" as UC19
+    usecase "Theo dõi yêu cầu hỗ trợ" as UC20
+}
+
+' Use Cases for Admin
+rectangle "Quản lý hệ thống" {
+    usecase "Quản lý người dùng" as UC21
+    usecase "Quản lý sản phẩm" as UC22
+    usecase "Quản lý danh mục" as UC23
+    usecase "Quản lý đơn hàng" as UC24
+    usecase "Quản lý kho hàng" as UC25
+    usecase "Xem báo cáo thống kê" as UC26
+    usecase "Quản lý khuyến mãi" as UC27
+    usecase "Quản lý vận chuyển" as UC28
+}
+
+' Use Cases for Sales Staff
+rectangle "Hỗ trợ bán hàng" {
+    usecase "Xử lý đơn hàng" as UC29
+    usecase "Cập nhật trạng thái đơn hàng" as UC30
+    usecase "Hỗ trợ khách hàng" as UC31
+    usecase "Xử lý khiếu nại" as UC32
+}
+
+' Use Cases for Payment System
+rectangle "Thanh toán" {
+    usecase "Xử lý thanh toán" as UC33
+    usecase "Hoàn tiền" as UC34
+    usecase "Xác thực giao dịch" as UC35
+}
+
+' Use Cases for Shipping System
+rectangle "Vận chuyển" {
+    usecase "Tính phí vận chuyển" as UC36
+    usecase "Theo dõi đơn hàng" as UC37
+    usecase "Cập nhật trạng thái vận chuyển" as UC38
+}
+
+' Relationships for Customer
+Customer --> UC1
+Customer --> UC2
+Customer --> UC3
+Customer --> UC6
+Customer --> UC7
+Customer --> UC8
+Customer --> UC9
+Customer --> UC10
+Customer --> UC11
+Customer --> UC12
+Customer --> UC13
+Customer --> UC14
+Customer --> UC17
+Customer --> UC18
+
+' Relationships for Registered Customer
+RegisteredCustomer --> UC4
+RegisteredCustomer --> UC5
+RegisteredCustomer --> UC15
+RegisteredCustomer --> UC16
+RegisteredCustomer --> UC19
+RegisteredCustomer --> UC20
+
+' Relationships for Admin
+Admin --> UC21
+Admin --> UC22
+Admin --> UC23
+Admin --> UC24
+Admin --> UC25
+Admin --> UC26
+Admin --> UC27
+Admin --> UC28
+
+' Relationships for Sales Staff
+SalesStaff --> UC29
+SalesStaff --> UC30
+SalesStaff --> UC31
+SalesStaff --> UC32
+
+' Relationships for Payment System
+PaymentSystem --> UC33
+PaymentSystem --> UC34
+PaymentSystem --> UC35
+
+' Relationships for Shipping System
+ShippingSystem --> UC36
+ShippingSystem --> UC37
+ShippingSystem --> UC38
+
+' Include relationships
+UC12 ..> UC13 : <<include>>
+UC12 ..> UC14 : <<include>>
+UC12 ..> UC33 : <<include>>
+UC12 ..> UC36 : <<include>>
+UC22 ..> UC25 : <<include>>
+UC24 ..> UC30 : <<include>>
+
+' Extend relationships
+UC15 ..> UC17 : <<extend>>
+UC16 ..> UC17 : <<extend>>
+
+@enduml
