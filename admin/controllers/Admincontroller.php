@@ -33,7 +33,7 @@ class Admincontroller
             }
 
             $this->example->suaSanPham($id, $ten, $gia, $mo_ta, $hinh_anh);
-            header("Location: " . BASE_URL . "/");
+            header("Location: " . BASE_URL . "?act=home");
             exit;
         }
 
@@ -44,7 +44,7 @@ class Admincontroller
     public function xoa($id)
     {
         $this->example->xoaSanPham($id);
-        header("Location: " . BASE_URL . "/");
+        header("Location: " . BASE_URL . "?act=home");
         exit;
     }
     // thêm sản phẩm
@@ -61,7 +61,7 @@ class Admincontroller
             move_uploaded_file($_FILES['hinh_anh']['tmp_name'], $target_file);
 
             $this->example->themSanPham($ten, $gia, $mo_ta, $target_file);
-            header("Location: " . BASE_URL . "/");
+            header("Location: " . BASE_URL . "?act=home");
             exit;
         }
 
@@ -77,9 +77,11 @@ class Admincontroller
             $email = $_POST['email'];
             $mat_khau = $_POST['mat_khau'];
             $vai_tro = $_POST['vai_tro'];
+            $dia_chi = $_POST['dia_chi'] ?? '';
+            $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
 
-            $this->example->suaNguoiDung($id, $ten, $email, $mat_khau, $vai_tro);
-            header("Location: " . BASE_URL . "/");
+            $this->example->suaNguoiDung($id, $ten, $email, $mat_khau, $vai_tro, $dia_chi, $so_dien_thoai);
+            header("Location: " . BASE_URL . "?act=ql_nguoidung");
             exit;
         }
 

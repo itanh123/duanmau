@@ -133,28 +133,32 @@
                                     <i class="bi bi-cart text-primary"></i> 
                                     Đơn #<?= $donHang['id'] ?>
                                 </h6>
-                                <?php
-                                $trangThaiClass = '';
-                                $trangThaiIcon = '';
-                                switch ($donHang['trang_thai']) {
-                                    case 'chờ xử lý':
-                                        $trangThaiClass = 'bg-warning';
-                                        $trangThaiIcon = 'bi bi-clock';
-                                        break;
-                                    case 'đang giao':
-                                        $trangThaiClass = 'bg-info';
-                                        $trangThaiIcon = 'bi bi-truck';
-                                        break;
-                                    case 'đã giao':
-                                        $trangThaiClass = 'bg-success';
-                                        $trangThaiIcon = 'bi bi-check-circle';
-                                        break;
-                                    case 'đã huỷ':
-                                        $trangThaiClass = 'bg-danger';
-                                        $trangThaiIcon = 'bi bi-x-circle';
-                                        break;
-                                }
-                                ?>
+                                                                 <?php
+                                 $trangThaiClass = '';
+                                 $trangThaiIcon = '';
+                                 switch ($donHang['trang_thai']) {
+                                     case 'chờ xử lý':
+                                         $trangThaiClass = 'bg-warning';
+                                         $trangThaiIcon = 'bi bi-clock';
+                                         break;
+                                     case 'đã xác nhận':
+                                         $trangThaiClass = 'bg-primary';
+                                         $trangThaiIcon = 'bi bi-check-circle-fill';
+                                         break;
+                                     case 'đang giao':
+                                         $trangThaiClass = 'bg-info';
+                                         $trangThaiIcon = 'bi bi-truck';
+                                         break;
+                                     case 'đã giao':
+                                         $trangThaiClass = 'bg-success';
+                                         $trangThaiIcon = 'bi bi-check-circle';
+                                         break;
+                                     case 'đã huỷ':
+                                         $trangThaiClass = 'bg-danger';
+                                         $trangThaiIcon = 'bi bi-x-circle';
+                                         break;
+                                 }
+                                 ?>
                                 <span class="badge <?= $trangThaiClass ?> status-badge">
                                     <i class="<?= $trangThaiIcon ?>"></i>
                                     <?= ucfirst($donHang['trang_thai']) ?>
@@ -207,10 +211,10 @@
                                        class="btn btn-outline-primary btn-sm">
                                         <i class="bi bi-eye"></i> Xem chi tiết
                                     </a>
-                                    <?php if ($donHang['trang_thai'] === 'chờ xử lý'): ?>
+                                    <?php if (in_array($donHang['trang_thai'], ['chờ xử lý', 'đã xác nhận', 'đang giao'])): ?>
                                         <button type="button" 
                                                 class="btn btn-outline-success btn-sm"
-                                                onclick="openUpdateStatusModal(<?= $donHang['id'] ?>)">
+                                                onclick="openUpdateStatusModal(<?= $donHang['id'] ?>, '<?= $donHang['trang_thai'] ?>')">
                                             <i class="bi bi-pencil"></i> Cập nhật trạng thái
                                         </button>
                                     <?php endif; ?>
@@ -247,11 +251,8 @@
                         <input type="hidden" name="id_don_hang" id="updateOrderId">
                         <div class="mb-3">
                             <label class="form-label">Trạng thái mới</label>
-                            <select name="trang_thai" class="form-select" required>
+                            <select name="trang_thai" class="form-select" required id="newStatusSelect">
                                 <option value="">Chọn trạng thái</option>
-                                <option value="đang giao">Đang giao</option>
-                                <option value="đã giao">Đã giao</option>
-                                <option value="đã huỷ">Đã huỷ</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -270,9 +271,34 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function openUpdateStatusModal(orderId) {
+        function openUpdateStatusModal(orderId, currentStatus) {
             document.getElementById('updateOrderId').value = orderId;
+            
+            // Cập nhật các option trạng thái có thể chọn
+            updateStatusOptions(currentStatus);
+            
             new bootstrap.Modal(document.getElementById('updateStatusModal')).show();
+        }
+        
+        function updateStatusOptions(currentStatus) {
+            const select = document.getElementById('newStatusSelect');
+            select.innerHTML = '<option value="">Chọn trạng thái</option>';
+            
+            if (currentStatus === 'chờ xử lý') {
+                select.innerHTML += `
+                    <option value="đã xác nhận">Đã xác nhận</option>
+                    <option value="đã huỷ">Đã huỷ</option>
+                `;
+            } else if (currentStatus === 'đã xác nhận') {
+                select.innerHTML += `
+                    <option value="đang giao">Đang giao</option>
+                    <option value="đã huỷ">Đã huỷ</option>
+                `;
+            } else if (currentStatus === 'đang giao') {
+                select.innerHTML += `
+                    <option value="đã giao">Đã giao</option>
+                `;
+            }
         }
 
         // Highlight từ khóa tìm kiếm trong trang

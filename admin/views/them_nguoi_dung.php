@@ -140,6 +140,21 @@
                             </div>
                             
                             <div class="col-md-6 mb-3">
+                                <label for="so_dien_thoai" class="form-label">
+                                    <i class="bi bi-telephone"></i> Số điện thoại
+                                </label>
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="so_dien_thoai" 
+                                       name="so_dien_thoai" 
+                                       placeholder="Nhập số điện thoại"
+                                       value="<?= $_POST['so_dien_thoai'] ?? '' ?>">
+                                <div class="form-text">Số điện thoại liên lạc</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
                                 <label for="xac_nhan_mat_khau" class="form-label">
                                     <i class="bi bi-lock-fill"></i> Xác nhận mật khẩu <span class="text-danger">*</span>
                                 </label>

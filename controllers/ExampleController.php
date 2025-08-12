@@ -23,6 +23,8 @@ class ExampleController
             $email = $_POST['email'];
             $mat_khau = $_POST['mat_khau'];
             $xac_nhan_mat_khau = $_POST['xac_nhan_mat_khau'] ?? '';
+            $dia_chi = $_POST['dia_chi'] ?? '';
+            $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
 
             // Kiểm tra xác nhận mật khẩu
             if ($mat_khau !== $xac_nhan_mat_khau) {
@@ -33,7 +35,7 @@ class ExampleController
                     $error = "Email này đã được sử dụng!";
                 } else {
                     // Thực hiện đăng ký
-                    if ($this->example->dangky($ten, $email, $mat_khau)) {
+                    if ($this->example->dangky($ten, $email, $mat_khau, $dia_chi, $so_dien_thoai)) {
                         $_SESSION['success'] = "Đăng ký tài khoản thành công! Vui lòng đăng nhập.";
                         header("Location: ?act=login");
                         exit;

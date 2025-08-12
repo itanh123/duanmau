@@ -8,14 +8,16 @@ class Example
         $this->conn = connectDB();
     }
     // hàm thêm người đùng hay là đăng ký tài khoản
-    public function dangky($ten, $email, $mat_khau)
+    public function dangky($ten, $email, $mat_khau, $dia_chi = null, $so_dien_thoai = null)
     {
-        $stmt = $this->conn->prepare("INSERT INTO nguoi_dung (ten, email, mat_khau, vai_tro) VALUES (:ten, :email, :mat_khau, 'user')");
+        $stmt = $this->conn->prepare("INSERT INTO nguoi_dung (ten, email, mat_khau, vai_tro, dia_chi, so_dien_thoai) VALUES (:ten, :email, :mat_khau, 'user', :dia_chi, :so_dien_thoai)");
         return $stmt->execute(
             [
                 ':ten' => $ten,
                 ':email' => $email,
-                ':mat_khau' => $mat_khau
+                ':mat_khau' => $mat_khau,
+                ':dia_chi' => $dia_chi,
+                ':so_dien_thoai' => $so_dien_thoai
             ]
         );
     }

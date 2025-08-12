@@ -78,7 +78,7 @@
 
         <!-- Thống kê tổng quan -->
         <div class="row mb-4">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card card-stats bg-primary text-white">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card card-stats bg-warning text-white">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -108,7 +108,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <div class="card card-stats bg-info text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Đã xác nhận</h6>
+                                <h3><?= number_format($thongKe['da_xac_nhan'] ?? 0) ?></h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-check-circle-fill fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card card-stats bg-secondary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Đang giao</h6>
+                                <h3><?= number_format($thongKe['dang_giao'] ?? 0) ?></h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-truck fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <div class="card card-stats bg-success text-white">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -123,8 +153,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card card-stats bg-info text-white">
+            <div class="col-md-2">
+                <div class="card card-stats bg-dark text-white">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -208,7 +238,7 @@
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($danhSachDonHang as $donHang): ?>
-                                    <tr>
+                                    <tr data-order-id="<?= $donHang['id'] ?>">
                                         <td>
                                             <strong>#<?= $donHang['id'] ?></strong>
                                         </td>
@@ -233,6 +263,10 @@
                                                 case 'chờ xử lý':
                                                     $trangThaiClass = 'bg-warning';
                                                     $trangThaiIcon = 'bi bi-clock';
+                                                    break;
+                                                case 'đã xác nhận':
+                                                    $trangThaiClass = 'bg-primary';
+                                                    $trangThaiIcon = 'bi bi-check-circle-fill';
                                                     break;
                                                 case 'đang giao':
                                                     $trangThaiClass = 'bg-info';
@@ -260,7 +294,7 @@
                                                    title="Xem chi tiết">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
-                                                <?php if ($donHang['trang_thai'] === 'chờ xử lý'): ?>
+                                                <?php if (in_array($donHang['trang_thai'], ['chờ xử lý', 'đã xác nhận', 'đang giao'])): ?>
                                                     <button type="button" 
                                                             class="btn btn-sm btn-outline-success btn-action" 
                                                             title="Cập nhật trạng thái"
@@ -268,7 +302,7 @@
                                                         <i class="bi bi-pencil"></i>
                                                     </button>
                                                 <?php endif; ?>
-                                                <?php if (in_array($donHang['trang_thai'], ['chờ xử lý', 'đang giao'])): ?>
+                                                <?php if (in_array($donHang['trang_thai'], ['chờ xử lý', 'đã xác nhận'])): ?>
                                                     <button type="button" 
                                                             class="btn btn-sm btn-outline-danger btn-action" 
                                                             title="Hủy đơn hàng"
@@ -302,11 +336,8 @@
                         <input type="hidden" name="id_don_hang" id="updateOrderId">
                         <div class="mb-3">
                             <label class="form-label">Trạng thái mới</label>
-                            <select name="trang_thai" class="form-select" required>
+                            <select name="trang_thai" class="form-select" required id="newStatusSelect">
                                 <option value="">Chọn trạng thái</option>
-                                <option value="đang giao">Đang giao</option>
-                                <option value="đã giao">Đã giao</option>
-                                <option value="đã huỷ">Đã huỷ</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -356,7 +387,47 @@
     <script>
         function openUpdateStatusModal(orderId) {
             document.getElementById('updateOrderId').value = orderId;
+            
+            // Lấy trạng thái hiện tại của đơn hàng
+            const currentStatus = getCurrentOrderStatus(orderId);
+            
+            // Cập nhật các option trạng thái có thể chọn
+            updateStatusOptions(currentStatus);
+            
             new bootstrap.Modal(document.getElementById('updateStatusModal')).show();
+        }
+        
+        function getCurrentOrderStatus(orderId) {
+            // Tìm hàng chứa đơn hàng và lấy trạng thái hiện tại
+            const row = document.querySelector(`tr[data-order-id="${orderId}"]`);
+            if (row) {
+                const statusBadge = row.querySelector('.status-badge');
+                if (statusBadge) {
+                    return statusBadge.textContent.trim().toLowerCase();
+                }
+            }
+            return 'chờ xử lý'; // Mặc định
+        }
+        
+        function updateStatusOptions(currentStatus) {
+            const select = document.getElementById('newStatusSelect');
+            select.innerHTML = '<option value="">Chọn trạng thái</option>';
+            
+            if (currentStatus === 'chờ xử lý') {
+                select.innerHTML += `
+                    <option value="đã xác nhận">Đã xác nhận</option>
+                    <option value="đã huỷ">Đã huỷ</option>
+                `;
+            } else if (currentStatus === 'đã xác nhận') {
+                select.innerHTML += `
+                    <option value="đang giao">Đang giao</option>
+                    <option value="đã huỷ">Đã huỷ</option>
+                `;
+            } else if (currentStatus === 'đang giao') {
+                select.innerHTML += `
+                    <option value="đã giao">Đã giao</option>
+                `;
+            }
         }
 
         function openCancelOrderModal(orderId) {

@@ -147,15 +147,16 @@
                                 <th>Email</th>
                                 <th>Vai trò</th>
                                 <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (empty($nguoiDung)): ?>
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">
-                                        <i class="bi bi-inbox"></i> Chưa có người dùng nào
-                                    </td>
+                                                                    <td colspan="7" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox"></i> Chưa có người dùng nào
+                                </td>
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($nguoiDung as $user): ?>
@@ -188,6 +189,12 @@
                                             <small class="text-muted">
                                                 <i class="bi bi-geo-alt"></i>
                                                 <?= htmlspecialchars($user['dia_chi'] ?? 'Chưa cập nhật') ?>
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">
+                                                <i class="bi bi-telephone"></i>
+                                                <?= htmlspecialchars($user['so_dien_thoai'] ?? 'Chưa cập nhật') ?>
                                             </small>
                                         </td>
                                         <td>

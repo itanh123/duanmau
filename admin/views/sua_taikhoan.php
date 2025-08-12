@@ -153,6 +153,33 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="dia_chi" class="form-label">
+                                    <i class="bi bi-geo-alt"></i> Địa chỉ
+                                </label>
+                                <textarea class="form-control" 
+                                          id="dia_chi" 
+                                          name="dia_chi" 
+                                          rows="3"
+                                          placeholder="Nhập địa chỉ"><?= htmlspecialchars($nguoidung['dia_chi'] ?? '') ?></textarea>
+                                <div class="form-text">Địa chỉ giao hàng của người dùng</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="so_dien_thoai" class="form-label">
+                                    <i class="bi bi-telephone"></i> Số điện thoại
+                                </label>
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="so_dien_thoai" 
+                                       name="so_dien_thoai" 
+                                       placeholder="Nhập số điện thoại"
+                                       value="<?= htmlspecialchars($nguoidung['so_dien_thoai'] ?? '') ?>">
+                                <div class="form-text">Số điện thoại liên lạc</div>
+                            </div>
+                        </div>
+
                         <!-- Phần mật khẩu -->
                         <div class="password-section">
                             <h6><i class="bi bi-lock"></i> Thay đổi mật khẩu</h6>

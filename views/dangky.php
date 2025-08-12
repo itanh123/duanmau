@@ -207,6 +207,34 @@
                                 <div class="form-text">Email sẽ được sử dụng để đăng nhập</div>
                             </div>
 
+                            <div class="form-floating">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="dia_chi" 
+                                       name="dia_chi" 
+                                       placeholder="Địa chỉ"
+                                       value="<?= htmlspecialchars($_POST['dia_chi'] ?? '') ?>"
+                                       required>
+                                <label for="dia_chi">
+                                    <i class="bi bi-geo-alt"></i> Địa chỉ
+                                </label>
+                                <div class="form-text">Nhập địa chỉ giao hàng của bạn</div>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="tel" 
+                                       class="form-control" 
+                                       id="so_dien_thoai" 
+                                       name="so_dien_thoai" 
+                                       placeholder="Số điện thoại"
+                                       value="<?= htmlspecialchars($_POST['so_dien_thoai'] ?? '') ?>"
+                                       required>
+                                <label for="so_dien_thoai">
+                                    <i class="bi bi-telephone"></i> Số điện thoại
+                                </label>
+                                <div class="form-text">Nhập số điện thoại liên lạc</div>
+                            </div>
+
                             <div class="form-floating position-relative">
                                 <input type="password" 
                                        class="form-control" 
@@ -277,6 +305,8 @@
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             const matKhau = document.getElementById('mat_khau').value;
             const xacNhanMatKhau = document.getElementById('xac_nhan_mat_khau').value;
+            const diaChi = document.getElementById('dia_chi').value;
+            const soDienThoai = document.getElementById('so_dien_thoai').value;
             
             if (matKhau.length < 6) {
                 e.preventDefault();
@@ -287,6 +317,20 @@
             if (matKhau !== xacNhanMatKhau) {
                 e.preventDefault();
                 alert('Mật khẩu xác nhận không khớp!');
+                return false;
+            }
+
+            if (diaChi.trim().length < 10) {
+                e.preventDefault();
+                alert('Địa chỉ phải có ít nhất 10 ký tự!');
+                return false;
+            }
+
+            // Kiểm tra số điện thoại (định dạng cơ bản)
+            const phoneRegex = /^[0-9+\-\s()]{10,15}$/;
+            if (!phoneRegex.test(soDienThoai)) {
+                e.preventDefault();
+                alert('Số điện thoại không hợp lệ! Vui lòng nhập số điện thoại từ 10-15 chữ số.');
                 return false;
             }
         });

@@ -68,16 +68,18 @@ class AdminModels
         return $stmt->fetch();
     }
     // hàm sửa và xóa tài khoản người dùng sửa dc vai trò nữa
-    public function suaNguoiDung($id, $ten, $email, $mat_khau, $vai_tro)
+    public function suaNguoiDung($id, $ten, $email, $mat_khau, $vai_tro, $dia_chi = null, $so_dien_thoai = null)
     {
-        $stmt = $this->conn->prepare("UPDATE nguoi_dung SET ten = :ten, email = :email, mat_khau = :mat_khau, vai_tro = :vai_tro WHERE id = :id");
+        $stmt = $this->conn->prepare("UPDATE nguoi_dung SET ten = :ten, email = :email, mat_khau = :mat_khau, vai_tro = :vai_tro, dia_chi = :dia_chi, so_dien_thoai = :so_dien_thoai WHERE id = :id");
         return $stmt->execute(
             [
                 ':id' => $id,
                 ':ten' => $ten,
                 ':email' => $email,
                 ':mat_khau' => $mat_khau,
-                ':vai_tro' => $vai_tro
+                ':vai_tro' => $vai_tro,
+                ':dia_chi' => $dia_chi,
+                ':so_dien_thoai' => $so_dien_thoai
             ]
         );
     }
@@ -313,6 +315,7 @@ class AdminModels
             $sql = "SELECT 
                         COUNT(*) as tong_don_hang,
                         COUNT(CASE WHEN trang_thai = 'chờ xử lý' THEN 1 END) as cho_xu_ly,
+                        COUNT(CASE WHEN trang_thai = 'đã xác nhận' THEN 1 END) as da_xac_nhan,
                         COUNT(CASE WHEN trang_thai = 'đang giao' THEN 1 END) as dang_giao,
                         COUNT(CASE WHEN trang_thai = 'đã giao' THEN 1 END) as da_giao,
                         COUNT(CASE WHEN trang_thai = 'đã huỷ' THEN 1 END) as da_huy,
@@ -448,6 +451,7 @@ class AdminModels
     {
         return [
             'cho_xu_ly' => 'chờ xử lý',
+            'da_xac_nhan' => 'đã xác nhận',
             'dang_giao' => 'đang giao',
             'da_giao' => 'đã giao',
             'da_huy' => 'đã huỷ'

@@ -43,7 +43,7 @@
     <!-- Sidebar menu -->
     <div class="sidebar">
         <h4>Admin Menu</h4>
-        <a href="?act=/">Trang chủ</a>
+        <a href="?act=home">Trang chủ</a>
         <a href="?act=them">Thêm sản phẩm</a>
         <a href="?act=quan_ly_bien_the">Quản lý biến thể</a>
         <a href="?act=ql_donhang">Quản lý đơn hàng</a>
@@ -55,7 +55,7 @@
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Sửa sản phẩm</h2>
-            <a href="?act=/" class="btn btn-secondary">Quay lại</a>
+            <a href="?act=home" class="btn btn-secondary">Quay lại</a>
         </div>
 
         <div class="form-container">
@@ -96,7 +96,7 @@
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
-                    <a href="?act=/" class="btn btn-secondary">Hủy</a>
+                    <a href="?act=home" class="btn btn-secondary">Hủy</a>
                 </div>
             </form>
         </div>
