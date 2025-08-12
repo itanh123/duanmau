@@ -7,6 +7,7 @@
     <title>Danh sách sản phẩm - Shop Quần Áo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="views/css/customer-style.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -149,6 +150,9 @@
                             <i class="bi bi-cart"></i> Giỏ hàng
                         </a>
                     </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="?act=danhSachDonHang">Đơn hàng</a>
+                        </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Xin chào, <?= htmlspecialchars($_SESSION['ten']) ?></a>
                     </li>

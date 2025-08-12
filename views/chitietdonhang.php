@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết đơn hàng</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="views/css/customer-style.css">
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
         .order-container {
             max-width: 1000px;
             margin: 30px auto;
@@ -176,8 +175,23 @@
                     </div>
                     
                     <div class="text-center mt-4">
-                        <a href="?act=danhSachDonHang" class="btn btn-outline-secondary">Quay lại danh sách đơn hàng</a>
-                        <a href="?act=hienthi" class="btn btn-primary">Tiếp tục mua sắm</a>
+                        <a href="?act=danhSachDonHang" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Quay lại danh sách đơn hàng
+                        </a>
+                        <a href="?act=xemTrangThaiDonHang&id=<?php echo $donHang['id']; ?>" class="btn btn-info ms-2">
+                            <i class="bi bi-info-circle"></i> Xem trạng thái
+                        </a>
+                        <a href="?act=hienthi" class="btn btn-primary ms-2">
+                            <i class="bi bi-cart-plus"></i> Tiếp tục mua sắm
+                        </a>
+                        
+                        <?php if ($donHang['trang_thai'] === 'chờ xử lý' || $donHang['trang_thai'] === 'đang giao'): ?>
+                            <button type="button" class="btn btn-outline-danger ms-2" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#huyDonHangModal">
+                                <i class="bi bi-x-circle"></i> Hủy đơn hàng
+                            </button>
+                        <?php endif; ?>
                     </div>
 
                     <?php if ($donHang['trang_thai'] === 'đã giao'): ?>
@@ -233,6 +247,44 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal hủy đơn hàng -->
+    <?php if ($donHang['trang_thai'] === 'chờ xử lý' || $donHang['trang_thai'] === 'đang giao'): ?>
+        <div class="modal fade" id="huyDonHangModal" tabindex="-1" aria-labelledby="huyDonHangModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="huyDonHangModalLabel">
+                            Xác nhận hủy đơn hàng #<?php echo $donHang['id']; ?>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="?act=huyDonHang">
+                        <div class="modal-body">
+                            <input type="hidden" name="id_don_hang" value="<?php echo $donHang['id']; ?>">
+                            
+                            <div class="alert alert-warning">
+                                <i class="bi bi-exclamation-triangle"></i>
+                                <strong>Lưu ý:</strong> Bạn có chắc chắn muốn hủy đơn hàng này không? 
+                                Hành động này không thể hoàn tác.
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="ly_do_huy" class="form-label">Lý do hủy đơn hàng:</label>
+                                <textarea class="form-control" id="ly_do_huy" 
+                                          name="ly_do_huy" rows="3" 
+                                          placeholder="Vui lòng cho biết lý do hủy đơn hàng..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                            <button type="submit" class="btn btn-danger">Xác nhận hủy đơn hàng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -28,6 +28,8 @@ match ($act) {
     "danhSachDonHang" => $controller->danhSachDonHang(),
     "timKiemSanPham" => $controller->timKiemSanPham(),
     "themPhanHoi" => $controller->themPhanHoi(),
+    "huyDonHang" => $controller->huyDonHang(),
+    "xemTrangThaiDonHang" => $controller->xemTrangThaiDonHang($_GET['id'] ?? null),
     "logout" => $controller->logout(),
     // Quản lý biến thể sản phẩm
     "quan_ly_bien_the" => $admin->quanLyBienThe(),

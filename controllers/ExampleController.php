@@ -513,4 +513,82 @@ class ExampleController
         header("Location: ?act=xemDonHang&id=" . $idDonHang);
         exit;
     }
+
+    // ===== CHỨC NĂNG QUẢN LÝ ĐƠN HÀNG CHO KHÁCH HÀNG =====
+
+    // Hủy đơn hàng (chỉ khi chưa giao hàng)
+    public function huyDonHang()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: ?act=login");
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idDonHang = $_POST['id_don_hang'] ?? '';
+            $lyDoHuy = $_POST['ly_do_huy'] ?? 'Khách hàng yêu cầu hủy';
+
+            if (empty($idDonHang)) {
+                $_SESSION['error'] = "Thông tin không hợp lệ!";
+                header("Location: ?act=danhSachDonHang");
+                exit;
+            }
+
+            // Kiểm tra xem đơn hàng có thuộc về người dùng hiện tại không
+            $donHang = $this->example->layDonHangTheoId($idDonHang);
+            if (!$donHang || $donHang['id_nguoi_dung'] != $_SESSION['user_id']) {
+                $_SESSION['error'] = "Bạn không có quyền hủy đơn hàng này!";
+                header("Location: ?act=danhSachDonHang");
+                exit;
+            }
+
+            // Kiểm tra xem đơn hàng có thể hủy không (chỉ hủy được khi chưa giao)
+            if ($donHang['trang_thai'] !== 'chờ xử lý' && $donHang['trang_thai'] !== 'đang giao') {
+                $_SESSION['error'] = "Không thể hủy đơn hàng này vì đã được giao hoặc đã hoàn thành!";
+                header("Location: ?act=danhSachDonHang");
+                exit;
+            }
+
+            // Thực hiện hủy đơn hàng
+            if ($this->example->huyDonHangKhachHang($idDonHang, $lyDoHuy)) {
+                $_SESSION['success'] = "Hủy đơn hàng thành công!";
+            } else {
+                $_SESSION['error'] = "Không thể hủy đơn hàng. Vui lòng thử lại!";
+            }
+        }
+
+        header("Location: ?act=danhSachDonHang");
+        exit;
+    }
+
+    // Xem trạng thái đơn hàng chi tiết
+    public function xemTrangThaiDonHang($id)
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: ?act=login");
+            exit;
+        }
+
+        if (!$id) {
+            $_SESSION['error'] = "Không tìm thấy đơn hàng!";
+            header("Location: ?act=danhSachDonHang");
+            exit;
+        }
+
+        // Lấy thông tin đơn hàng
+        $donHang = $this->example->layDonHangTheoId($id);
+        if (!$donHang || $donHang['id_nguoi_dung'] != $_SESSION['user_id']) {
+            $_SESSION['error'] = "Bạn không có quyền xem đơn hàng này!";
+            header("Location: ?act=danhSachDonHang");
+            exit;
+        }
+
+        // Lấy chi tiết đơn hàng
+        $chiTietDonHang = $this->example->layChiTietDonHangTheoId($id);
+        
+        // Lấy lịch sử cập nhật trạng thái
+        $lichSuTrangThai = $this->example->layLichSuTrangThaiDonHang($id);
+
+        include "views/trang_thai_don_hang.php";
+    }
 }

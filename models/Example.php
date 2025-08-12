@@ -578,4 +578,113 @@ class Example
             return false;
         }
     }
+
+    // ===== CHỨC NĂNG QUẢN LÝ ĐƠN HÀNG CHO KHÁCH HÀNG =====
+
+    // Lấy đơn hàng theo ID
+    public function layDonHangTheoId($id)
+    {
+        try {
+            $sql = "SELECT dh.*, nd.ten as ten_nguoi_dung, nd.email, nd.dia_chi, nd.so_dien_thoai
+                    FROM don_hang dh
+                    JOIN nguoi_dung nd ON dh.id_nguoi_dung = nd.id
+                    WHERE dh.id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            error_log("Lỗi lấy đơn hàng: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Lấy chi tiết đơn hàng theo ID
+    public function layChiTietDonHangTheoId($id)
+    {
+        try {
+            $sql = "SELECT ctdh.*, sp.ten as ten_san_pham, sp.hinh_anh, bt.mau_sac, bt.kich_thuoc
+                    FROM chi_tiet_don_hang ctdh
+                    JOIN bien_the_san_pham bt ON ctdh.id_bien_the = bt.id
+                    JOIN san_pham sp ON bt.id_san_pham = sp.id
+                    WHERE ctdh.id_don_hang = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            error_log("Lỗi lấy chi tiết đơn hàng: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Hủy đơn hàng cho khách hàng
+    public function huyDonHangKhachHang($idDonHang, $lyDoHuy)
+    {
+        try {
+            $this->conn->beginTransaction();
+
+            // Cập nhật trạng thái đơn hàng thành "đã hủy"
+            $sql = "UPDATE don_hang SET trang_thai = 'đã huỷ', ghi_chu = :ghi_chu, ngay_cap_nhat = CURRENT_DATE 
+                    WHERE id = :id_don_hang";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':ghi_chu' => $lyDoHuy,
+                ':id_don_hang' => $idDonHang
+            ]);
+
+            // Hoàn trả số lượng sản phẩm về kho
+            $sql = "UPDATE bien_the_san_pham bt 
+                    SET bt.so_luong = bt.so_luong + ctdh.so_luong
+                    FROM chi_tiet_don_hang ctdh 
+                    WHERE ctdh.id_don_hang = :id_don_hang AND ctdh.id_bien_the = bt.id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id_don_hang' => $idDonHang]);
+
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conn->rollBack();
+            error_log("Lỗi hủy đơn hàng: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Lấy lịch sử cập nhật trạng thái đơn hàng
+    public function layLichSuTrangThaiDonHang($idDonHang)
+    {
+        try {
+            // Vì không có bảng lịch sử riêng, ta sẽ tạo một mảng giả lập
+            // Trong thực tế, bạn nên tạo bảng lich_su_trang_thai_don_hang
+            $sql = "SELECT trang_thai, ngay, ngay_cap_nhat, ghi_chu FROM don_hang WHERE id = :id_don_hang";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id_don_hang' => $idDonHang]);
+            $donHang = $stmt->fetch();
+
+            if (!$donHang) {
+                return [];
+            }
+
+            $lichSu = [];
+            
+            // Thêm trạng thái ban đầu
+            $lichSu[] = [
+                'trang_thai' => 'chờ xử lý',
+                'ngay' => $donHang['ngay'],
+                'ghi_chu' => 'Đơn hàng được tạo'
+            ];
+
+            // Thêm trạng thái hiện tại nếu khác với ban đầu
+            if ($donHang['trang_thai'] !== 'chờ xử lý') {
+                $lichSu[] = [
+                    'trang_thai' => $donHang['trang_thai'],
+                    'ngay' => $donHang['ngay_cap_nhat'] ?? $donHang['ngay'],
+                    'ghi_chu' => $donHang['ghi_chu'] ?? 'Cập nhật trạng thái'
+                ];
+            }
+
+            return $lichSu;
+        } catch (Exception $e) {
+            error_log("Lỗi lấy lịch sử trạng thái: " . $e->getMessage());
+            return [];
+        }
+    }
 }
